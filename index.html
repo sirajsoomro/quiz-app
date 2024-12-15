@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Quiz App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div id="quiz-container" class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <h1 class="text-2xl font-bold mb-4 text-center">JavaScript Quiz</h1>
+        <div id="question-container" class="mb-4">
+            <p id="question" class="text-lg font-semibold"></p>
+        </div>
+        <div id="answers-container" class="space-y-2"></div>
+        <button id="submit-btn" class="mt-4 w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition duration-300">Submit</button>
+        <p id="result" class="mt-4 text-center font-semibold"></p>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "Which keyword is used to declare a variable in JavaScript?",
+                answers: ["var", "let", "const", "All of the above"],
+                correct: 3
+            },
+            {
+                question: "What is the correct way to write a comment in JavaScript?",
+                answers: ["// This is a comment", "<!-- This is a comment -->", "' This is a comment", "/* This is a comment */"],
+                correct: 0
+            },
+            {
+                question: "Which method is used to add an element to the end of an array?",
+                answers: ["push()", "pop()", "unshift()", "shift()"],
+                correct: 0
+            },
+            {
+                question: "What does the '===' operator do in JavaScript?",
+                answers: ["Assigns a value", "Compares values and types", "Compares only values", "Logical AND"],
+                correct: 1
+            },
+            {
+                question: "Which function is used to parse a string to an integer in JavaScript?",
+                answers: ["parseInt()", "parseFloat()", "Number()", "String()"],
+                correct: 0
+            },
+            {
+                question: "What is the purpose of the 'this' keyword in JavaScript?",
+                answers: ["To refer to the current object", "To create a new object", "To define a function", "To declare a variable"],
+                correct: 0
+            },
+            {
+                question: "Which method is used to remove the last element from an array?",
+                answers: ["pop()", "push()", "shift()", "unshift()"],
+                correct: 0
+            },
+            {
+                question: "What does JSON stand for?",
+                answers: ["JavaScript Object Notation", "JavaScript Online Notation", "Java Standard Object Notation", "JavaScript Oriented Notation"],
+                correct: 0
+            },
+            {
+                question: "Which operator is used for string concatenation in JavaScript?",
+                answers: ["+", "-", "*", "/"],
+                correct: 0
+            },
+            {
+                question: "What is the purpose of the 'typeof' operator?",
+                answers: ["To check if a variable is defined", "To determine the type of a value", "To create a new type", "To compare two values"],
+                correct: 1
+            },
+            {
+                question: "Which method is used to round a number to the nearest integer?",
+                answers: ["Math.round()", "Math.floor()", "Math.ceil()", "Math.trunc()"],
+                correct: 0
+            },
+            {
+                question: "What is the correct way to write an arrow function in JavaScript?",
+                answers: ["function() => {}", "() => {}", "=> () {}", "function => ()"],
+                correct: 1
+            },
+            {
+                question: "Which method is used to remove the first element from an array?",
+                answers: ["shift()", "unshift()", "pop()", "push()"],
+                correct: 0
+            },
+            {
+                question: "What does the 'NaN' value represent in JavaScript?",
+                answers: ["Not a Number", "Null and None", "Negative Number", "New Array Node"],
+                correct: 0
+            },
+            {
+                question: "Which loop is used to iterate over the properties of an object?",
+                answers: ["for loop", "while loop", "do...while loop", "for...in loop"],
+                correct: 3
+            },
+            {
+                question: "What is the purpose of the 'use strict' directive in JavaScript?",
+                answers: ["To enable strict mode", "To include external scripts", "To declare global variables", "To define a new function"],
+                correct: 0
+            },
+            {
+                question: "Which method is used to join the elements of an array into a string?",
+                answers: ["concat()", "join()", "split()", "slice()"],
+                correct: 1
+            },
+            {
+                question: "What is the result of 3 + '3' in JavaScript?",
+                answers: ["6", "33", "NaN", "Error"],
+                correct: 1
+            },
+            {
+                question: "Which keyword is used to declare a constant variable in JavaScript?",
+                answers: ["var", "let", "const", "final"],
+                correct: 2
+            },
+            {
+                question: "What is the purpose of the 'addEventListener' method?",
+                answers: ["To add a new element to the DOM", "To attach an event handler to an element", "To create a new event", "To remove an event listener"],
+                correct: 1
+            },
+            {
+                question: "Which method is used to remove a specific element from an array?",
+                answers: ["delete()", "remove()", "splice()", "slice()"],
+                correct: 2
+            },
+            {
+                question: "What is the purpose of the 'setTimeout' function?",
+                answers: ["To pause the execution of a script", "To set a timer for executing a function", "To measure the execution time of a function", "To create a time-based loop"],
+                correct: 1
+            },
+            {
+                question: "Which operator is used for logical AND in JavaScript?",
+                answers: ["&", "&&", "AND", "||"],
+                correct: 1
+            },
+            {
+                question: "What is the purpose of the 'map' method in JavaScript?",
+                answers: ["To create a new object", "To iterate over an array", "To create a new array with the results of a function", "To filter an array"],
+                correct: 2
+            },
+            {
+                question: "Which method is used to convert a string to lowercase?",
+                answers: ["toLowerCase()", "toLower()", "lowerCase()", "caseLower()"],
+                correct: 0
+            },
+            {
+                question: "What is the purpose of the 'try...catch' statement in JavaScript?",
+                answers: ["To define a new function", "To handle errors and exceptions", "To create a loop", "To declare variables"],
+                correct: 1
+            },
+            {
+                question: "Which method is used to check if an array includes a certain element?",
+                answers: ["contains()", "has()", "includes()", "indexOf()"],
+                correct: 2
+            },
+            {
+                question: "What is the purpose of the 'Object.keys()' method?",
+                answers: ["To create a new object", "To get an array of an object's property names", "To lock an object's properties", "To delete object properties"],
+                correct: 1
+            },
+            {
+                question: "Which operator is used for exponentiation in JavaScript?",
+                answers: ["^", "**", "^^", "exp"],
+                correct: 1
+            },
+            {
+                question: "What is the purpose of the 'async/await' keywords in JavaScript?",
+                answers: ["To declare synchronous functions", "To handle asynchronous operations", "To create loops", "To define object properties"],
+                correct: 1
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        const questionEl = document.getElementById('question');
+        const answersContainer = document.getElementById('answers-container');
+        const submitBtn = document.getElementById('submit-btn');
+        const resultEl = document.getElementById('result');
+
+        function loadQuestion() {
+            const question = quizData[currentQuestion];
+            // console.log("questions:",question.question)
+            questionEl.textContent = `${currentQuestion + 1}. ${question.question}`;
+
+            answersContainer.innerHTML = '';
+            question.answers.forEach((answer, index) => {
+                const button = document.createElement('button');
+                button.textContent = answer;
+                button.classList.add('w-full', 'text-left', 'p-2', 'rounded', 'bg-gray-200', 'hover:bg-gray-300', 'transition', 'duration-300');
+                button.addEventListener('click', () => selectAnswer(index));
+                answersContainer.appendChild(button);
+            });
+
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        }
+
+        function selectAnswer(index) {
+            const buttons = answersContainer.getElementsByTagName('button');
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove('bg-blue-500', 'text-white');
+                buttons[i].classList.add('bg-gray-200');
+            }
+            buttons[index].classList.remove('bg-gray-200');
+            buttons[index].classList.add('bg-blue-500', 'text-white');
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+
+        function submitAnswer() {
+            const selectedButton = answersContainer.querySelector('.bg-blue-500');
+            if (!selectedButton) return;
+
+            const selectedAnswer = Array.from(answersContainer.children).indexOf(selectedButton);
+            if (selectedAnswer === quizData[currentQuestion].correct) {
+                score++;
+            }
+
+            currentQuestion++;
+
+            if (currentQuestion < quizData.length) {
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            questionEl.textContent = 'Quiz Completed!';
+            answersContainer.innerHTML = '';
+            submitBtn.style.display = 'none';
+            resultEl.textContent = `Your score: ${score} out of ${quizData.length}`;
+        }
+
+        submitBtn.addEventListener('click', submitAnswer);
+        loadQuestion();
+    </script>
+</body>
+</html>
